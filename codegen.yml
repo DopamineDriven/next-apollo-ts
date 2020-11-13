@@ -1,0 +1,22 @@
+overwrite: true
+schema: "https://nextjs-graphql-with-prisma-simple.vercel.app/api"
+documents: "lib/**/*.{graphql,ts,js,tsx}"
+config:
+  numericEnums: true
+generates:
+  ./graphql.d.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-graphql-files-modules"
+      - "typed-document-node"
+      - "typescript-react-apollo"
+      - "typescript-apollo-client-helpers"
+    config:
+      skipTypename: true
+      withHooks: true
+      apolloReactCommonImportFrom: '@apollo/client'
+      apolloReactHooksImportFrom: '@apollo/client'
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
