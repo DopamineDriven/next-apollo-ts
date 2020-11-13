@@ -1,25 +1,18 @@
-import { gql, useQuery, NetworkStatus } from '@apollo/client';
+import { NetworkStatus, useQuery } from '@apollo/client';
 import ErrorMessage from './ErrorMessage';
 import PostUpvoter from './PostUpvoter';
 import ALL_POSTS from '../lib/all-posts';
-import { allPosts_allPosts } from '../lib/__generated__/allPosts';
+import {
+	allPosts_allPosts,
+	allPostsVariables,
+	allPosts
+} from '../lib/__generated__/allPosts';
 
-export const ALL_POSTS_QUERY = gql`
-	query allPosts($first: Int!, $skip: Int!) {
-		allPosts(orderBy: { createdAt: desc }, first: $first, skip: $skip) {
-			id
-			title
-			votes
-			url
-			createdAt
-		}
-		_allPostsMeta {
-			count
-		}
-	}
-`;
 
-export const allPostsQueryVars = {
+
+export const ALL_POSTS_QUERY: allPosts = ALL_POSTS;
+
+export const allPostsQueryVars: allPostsVariables = {
 	skip: 0,
 	first: 10
 };
@@ -48,8 +41,8 @@ export default function PostList() {
 
 	if (error) return <ErrorMessage message='Error loading posts.' />;
 	if (loading && !loadingMorePosts) return <div>Loading</div>;
-
-	const { allPosts, _allPostsMeta } = data;
+	
+	const {allPosts, _allPostsMeta } = data;
 	const areMorePosts = allPosts.length < _allPostsMeta.count;
 
 	return (
